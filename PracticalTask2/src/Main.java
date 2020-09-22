@@ -88,7 +88,7 @@ public class Main {
     public static boolean checkBalance(int[] array){
         if (array.length < 2)
             return true;
-        for (int i = 0; i < array.length; i++){
+        for (int i = 0; i < array.length-1; i++){
             if (sumOfArrayRange(array,0,i) == sumOfArrayRange(array,i+1,array.length-1))
                 return true;
         }
