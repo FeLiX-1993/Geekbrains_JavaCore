@@ -12,7 +12,7 @@ public class Main {
         scan = new Scanner(System.in);
         random = new Random();
 
-        //playGuessNumbers();
+        playGuessNumbers();
         playGuessWords();
 
         scan.close();
@@ -45,7 +45,7 @@ public class Main {
 
     }
 
-    public static void guessNumber(int Number){
+    public static void guessNumber(int number){
 
         int userNumber;
         int countAttempts = 3;
@@ -53,16 +53,19 @@ public class Main {
         do {
             System.out.println("Please, input the guess number");
             userNumber = scan.nextInt();
-            if (Number == userNumber) {
-                System.out.printf("You win, the guess number is %s\n", Number);
+            if (number == userNumber) {
+                System.out.printf("You win, the guess number is %s\n", number);
                 break;
             } else {
                 countAttempts--;
-                if (countAttempts == 0){
-                    System.out.printf("You lose, the guess number is %s\n", Number);
+                if (countAttempts == 0) {
+                    System.out.printf("You lose, the guess number is %s\n", number);
                     break;
-                } else
-                    System.out.printf("The input number is wrong, %s attempts left\n", countAttempts);
+                }
+                else if (number > userNumber)
+                    System.out.printf("The input number is greater, %s attempts left\n", countAttempts);
+                else
+                    System.out.printf("The input number is less, %s attempts left\n", countAttempts);
             }
 
         } while (true);
