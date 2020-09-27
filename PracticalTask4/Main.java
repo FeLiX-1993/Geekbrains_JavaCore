@@ -269,16 +269,16 @@ public class Main {
 
         // 1. До выигрыша один шаг
         if (count0 == fieldSize - 1)
-            priority = 10;
+            priority = 20;
         // 2. До проигрыша один шаг
         else if (countX == fieldSize-1 && count0 == 0)
-            priority = 5;
+            priority = 15;
         // 3. Блокируем дальнейшую стратегию игрока
         else if (countX>count0 && count0 == 0)
-            priority = 2;
+            priority = 10;
         // 4 Атакуем сами
         else if (count0 > 0 && countX == 0)
-            priority = 1;
+            priority = 5;
 
         return priority;
     }
