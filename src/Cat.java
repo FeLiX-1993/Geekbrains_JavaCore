@@ -4,11 +4,11 @@ public class Cat extends Animal{
     private static final double JUMP_LIMIT_DEFAULT   = 2;
 
     public Cat(String name) {
-        super(name, RUN_LIMIT_DEFAULT, JUMP_LIMIT_DEFAULT);
+        super(name, RUN_LIMIT_DEFAULT, JUMP_LIMIT_DEFAULT, 0);
     }
 
     public Cat(String name, double runLimit, double jumpLimit) {
-        super(name, runLimit, jumpLimit);
+        super(name, runLimit, jumpLimit, 0);
     }
 
     @Override

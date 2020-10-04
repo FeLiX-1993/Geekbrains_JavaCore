@@ -5,12 +5,6 @@ public abstract class Animal {
     private double jumpLimit;
     private double swimLimit;
 
-    public Animal(String name, double runLimit, double jumpLimit) {
-        this.name       = name;
-        this.runLimit   = runLimit;
-        this.jumpLimit  = jumpLimit;
-    }
-
     public Animal(String name, double runLimit, double jumpLimit, double swimLimit) {
         this.name       = name;
         this.runLimit   = runLimit;
