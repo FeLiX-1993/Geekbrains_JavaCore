@@ -15,9 +15,11 @@ public class Cat {
     public void eat(Plate p) {
         if (fullNess == appetite)
             return;
-        int food = p.getFoodToDecrease(appetite - fullNess);
-        p.decreaseFood(food);
-        fullNess = food;
+        int availableFood = p.getAvailableFood(appetite - fullNess);
+        if (availableFood == 0)
+            return;
+        p.decreaseFood(availableFood);
+        fullNess = availableFood;
     }
 
     public static void eat(Cat[] cats, Plate p) {

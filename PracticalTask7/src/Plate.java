@@ -10,7 +10,7 @@ public class Plate {
         return food;
     }
 
-    public int getFoodToDecrease(int requestedFood) {
+    public int getAvailableFood(int requestedFood) {
         return Math.min(food, requestedFood);
     }
 
