@@ -19,7 +19,7 @@ public class Plate {
     }
 
     public void increaseFood(int n) {
-        food = +food;
+        food += food;
     }
 
     public void info() {
