@@ -72,7 +72,7 @@ public class Calculator {
 
         JButton Btn = new JButton(title);
         Btn.addActionListener(actListener);
-        Btn.setBackground(Color.lightGray);
+        Btn.setBackground(col);
         parent.add(Btn);
 
     }
