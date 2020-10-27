@@ -32,7 +32,7 @@ public class Main {
                     arrayOfInt[i][j] = Integer.parseInt(array[i][j]);
                 } catch (NumberFormatException e) {
                     throw new MyArrayDataException(String.format("Failed to convert \"%s\" [%s][%s] to int",
-                            array[i][j],i+1,j+1));
+                            array[i][j],i+1,j+1), e);
                 }
             }
         }
