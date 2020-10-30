@@ -21,9 +21,9 @@ public class Main {
 
     }
 
-    static void printUniqueWords(String[] words, boolean withCountOccurrence) {
+    static void printUniqueWords(String[] words, boolean withCountOfOccurrences) {
 
-        if (withCountOccurrence) {
+        if (withCountOfOccurrences) {
 
             HashMap<String, Integer> wordsMap = new HashMap<>();
             for (String word: words) {
