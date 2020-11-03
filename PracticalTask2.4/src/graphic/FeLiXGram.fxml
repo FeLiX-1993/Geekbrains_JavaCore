@@ -1,0 +1,27 @@
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane fx:controller="graphic.Controller" xmlns:fx="http://javafx.com/fxml">
+    <center>
+        <TextArea fx:id="historyTextArea" editable="false"/>
+    </center>
+    <bottom>
+        <HBox>
+            <TextField fx:id="messageTextField" HBox.hgrow="ALWAYS"
+                       minHeight="40.0" onAction="#msgTextFieldEnterAction"/>
+            <Button onAction="#btnSendClickAction">
+                <graphic>
+                    <ImageView fitHeight="30.0" fitWidth="35.0">
+                        <image>
+                            <Image url="logo.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+        </HBox>
+    </bottom>
+</BorderPane>
