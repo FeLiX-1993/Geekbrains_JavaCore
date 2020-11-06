@@ -1,33 +1,31 @@
-import java.util.Arrays;
-
 public class Main {
 
     static final int SIZE = 10000000;
 
     public static void main(String[] args) {
 
-        // Single stream
+        // Single thread
         long a = System.currentTimeMillis();
-        calculateSingleStream();
-        System.out.printf("Calculating score in 1 stream: %s\n", System.currentTimeMillis() - a);
+        calculateSingleThread();
+        System.out.printf("Calculating score in 1 thread: %s\n", System.currentTimeMillis() - a);
 
-        // Multiple stream
+        // Multiple threads
         for (int i = 2; i <= 10; i++) {
             long b = System.currentTimeMillis();
-            calculateMultipleStream(i);
-            System.out.printf("Calculating score in %s streams: %s\n", i, System.currentTimeMillis() - b);
+            calculateMultipleThreads(i);
+            System.out.printf("Calculating score in %s threads: %s\n", i, System.currentTimeMillis() - b);
         }
 
     }
 
-    public static void calculateSingleStream() {
+    public static void calculateSingleThread() {
 
         float[] arr = createArray();
         calculate(arr);
 
     }
 
-    public static void calculateMultipleStream(int countOfThreads) {
+    public static void calculateMultipleThreads(int countOfThreads) {
 
         float[] arr = createArray();
         int sizeOfParts = SIZE / countOfThreads;
@@ -55,20 +53,18 @@ public class Main {
         }
 
         // Awaiting completion
-        while (true) {
-            int countAliveThreads = 0;
-            for (int i = 0; i < threads.length; i++) {
-                if (threads[i].isAlive())
-                    countAliveThreads++;
+        for (int i = 0; i < threads.length; i++) {
+            try {
+                threads[i].join();
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
             }
-            if (countAliveThreads == 0)
-                break;
         }
 
         // Collecting the array
         float[] arr_Full = new float[SIZE];
         for (int i = 0; i < arr_Parts.length; i++) {
-            System.arraycopy(arr_Parts[i], 0, arr_Full, i * (sizeOfParts), arr_Parts[i].length);
+            System.arraycopy(arr_Parts[i], 0, arr_Full, i * sizeOfParts, arr_Parts[i].length);
         }
 
     }
