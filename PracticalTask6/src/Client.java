@@ -40,9 +40,7 @@ public class Client {
             @Override
             public void run() {
                 try {
-                    while (true) {
-                        if (!connectionOpen)
-                            break;
+                    while (connectionOpen) {
                         String strFromServer = in.readUTF();
                         if (strFromServer.equals("/end")) {
                             connectionOpen = false;
@@ -58,9 +56,7 @@ public class Client {
         }).start();
 
         try {
-            while (true) {
-                if (!connectionOpen)
-                    break;
+            while (connectionOpen) {
                 String strToServer = scanner.nextLine();
                 if (strToServer.equals("/end"))
                     connectionOpen = false;
