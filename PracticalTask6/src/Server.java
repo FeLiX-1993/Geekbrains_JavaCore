@@ -1,5 +1,3 @@
-import jdk.jfr.DataAmount;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -19,15 +17,15 @@ public class Server {
 
     public Server() {
         try {
-            openConnection();
+            createServer();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            closeConnection();
+            closeServer();
         }
     }
 
-    public void openConnection() throws IOException {
+    public void createServer() throws IOException {
 
         serverSocket = new ServerSocket(SERVER_PORT);
         socket = serverSocket.accept();
@@ -66,16 +64,14 @@ public class Server {
                 String strToClient = scanner.nextLine();
                 if (strToClient.equals("/end"))
                     connectionOpen = false;
-                synchronized (socket) {
-                    out.writeUTF(strToClient);
-                }
+                out.writeUTF(strToClient);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void closeConnection() {
+    public void closeServer() {
         try {
             in.close();
         } catch (IOException e) {

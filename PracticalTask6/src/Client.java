@@ -64,9 +64,7 @@ public class Client {
                 String strToServer = scanner.nextLine();
                 if (strToServer.equals("/end"))
                     connectionOpen = false;
-                synchronized (socket) {
-                    out.writeUTF(strToServer);
-                }
+                out.writeUTF(strToServer);
             }
         } catch (Exception e) {
             e.printStackTrace();
