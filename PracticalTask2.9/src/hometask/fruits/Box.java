@@ -40,7 +40,7 @@ public class Box <T extends Fruit> {
 
     @Override
     public String toString() {
-        return "hometask.fruits.Box{" +
+        return "Box{" +
                 "fruits=" + fruits +
                 '}';
     }

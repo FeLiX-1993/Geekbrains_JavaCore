@@ -14,7 +14,7 @@ public class Apple extends Fruit {
 
     @Override
     public String toString() {
-        return "hometask.fruits.Apple{" +
+        return "Apple{" +
                 "weight=" + weight +
                 '}';
     }
