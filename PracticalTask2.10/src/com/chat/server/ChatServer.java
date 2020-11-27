@@ -1,28 +1,35 @@
 package com.chat.server;
 
 import com.chat.auth.*;
-import com.chat.entity.User;
+import com.chat.history.BasicHistoryService;
+import com.chat.history.HistoryService;
 import com.chat.user.BasicUserService;
 import com.chat.user.UserService;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 public class ChatServer implements Server {
+
     private Set<ClientHandler> clients;
     private AuthenticationService authenticationService;
     private UserService userService;
+    private HistoryService historyService;
 
     public ChatServer() {
         try {
             System.out.println("Server is starting up...");
-            ServerSocket serverSocket = new ServerSocket(8887);
+            ServerSocket serverSocket = new ServerSocket(8889);
             clients = new HashSet<>();
             authenticationService = new BasicAuthenticationService();
             userService = new BasicUserService();
+            historyService = new BasicHistoryService();
 
             System.out.println("Server is started up...");
 
@@ -40,7 +47,7 @@ public class ChatServer implements Server {
     @Override
     public synchronized void sendBroadcastMessage(String message) {
         for (ClientHandler client: clients) {
-            client.sendMessage(message);
+            client.sendServiceMessage(message);
         }
     }
 
@@ -56,18 +63,28 @@ public class ChatServer implements Server {
         }
 
         for (ClientHandler client : clients) {
-            if (!client.getName().equals(sender.getName()))
-                client.sendMessage(String.format("%s to all: %s", sender.getName(), message));
+                client.sendMessage(String.format("[%s] %s : %s",
+                        new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()),
+                        sender.getName(),
+                        message)
+                );
         }
     }
 
     @Override
     public synchronized void sendMessage(String message, ClientHandler sender, ClientHandler recipient) {
 
-        recipient.sendMessage(String.format("%s to %s: %s"
-                , sender.getName()
-                , recipient.getName()
-                , message));
+        ArrayList<ClientHandler> sr = new ArrayList<>();
+        sr.add(sender);
+        sr.add(recipient);
+
+        for (ClientHandler c: sr) {
+            c.sendMessage(String.format("[%s] %s: %s",
+                    new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Date()),
+                    c.getName(),
+                    message));
+        }
+
     }
 
     @Override
@@ -96,6 +113,11 @@ public class ChatServer implements Server {
     @Override
     public UserService getUserService() {
         return userService;
+    }
+
+    @Override
+    public HistoryService getHistoryService() {
+        return historyService;
     }
 
     private ClientHandler getClientHandlerByName(String name) {

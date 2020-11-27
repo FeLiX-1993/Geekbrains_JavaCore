@@ -1,6 +1,8 @@
 package com.chat.server;
 
 import com.chat.auth.*;
+import com.chat.history.BasicHistoryService;
+import com.chat.history.HistoryService;
 import com.chat.user.UserService;
 
 public interface Server {
@@ -12,4 +14,5 @@ public interface Server {
     void unsubscribe(ClientHandler client);
     AuthenticationService getAuthenticationService();
     UserService getUserService();
+    HistoryService getHistoryService();
 }

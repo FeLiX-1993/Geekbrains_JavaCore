@@ -2,7 +2,6 @@ package com.chat.auth;
 
 import com.chat.database.DBService;
 import com.chat.entity.User;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

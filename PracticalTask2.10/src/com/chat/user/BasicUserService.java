@@ -2,12 +2,9 @@ package com.chat.user;
 
 import com.chat.database.DBService;
 import com.chat.entity.User;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
 
 public class BasicUserService implements UserService {
 

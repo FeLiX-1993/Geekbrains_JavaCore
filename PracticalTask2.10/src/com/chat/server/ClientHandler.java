@@ -38,10 +38,15 @@ public class ClientHandler {
         return name;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     private void doListen() {
         new Thread(() -> {
             try {
                 doAuth();
+                receiveHistory();
                 receiveMessage();
             } catch (Exception e) {
                 throw new RuntimeException("SWW", e);
@@ -84,19 +89,20 @@ public class ClientHandler {
                             .ifPresentOrElse(
                                     authUser -> {
                                         if (!server.isLoggedIn(authUser.getNickname())) {
-                                            sendMessage("cmd auth: Status OK");
                                             user = authUser;
-                                            server.sendBroadcastMessage(user.getNickname() + " is logged in.");
+                                            name = user.getNickname();
+                                            sendServiceMessage("cmd auth: Status OK");
+                                            server.sendBroadcastMessage(name + " is logged in.");
                                             server.subscribe(this);
                                             signedIn = true;
                                         } else {
-                                            sendMessage("Current user is already logged in.");
+                                            sendServiceMessage("Current user is already logged in.");
                                         }
                                     },
                                     new Runnable() {
                                         @Override
                                         public void run() {
-                                            sendMessage("No a such user by email and password.");
+                                            sendServiceMessage("No a such user by email and password.");
                                         }
                                     }
                             );
@@ -117,7 +123,7 @@ public class ClientHandler {
                 if (message.startsWith("-nick")) {
                     String[] splitMessage = message.split("\\s");
                     if (server.getUserService().changeNickname(user, splitMessage[1]))
-                        sendMessage("Nick has been changed");
+                        sendServiceMessage("Nick has been changed");
                     break;
                 } else if(message.equals("-exit")) {
                     return;
@@ -129,7 +135,20 @@ public class ClientHandler {
         }
     }
 
+    private void receiveHistory() {
+        sendServiceMessage(server.getHistoryService().getMessageHistory(user, 5));
+    }
+
     public void sendMessage(String message) {
+        try {
+            out.writeUTF(message);
+            server.getHistoryService().saveMessageHistory(message, user);
+        } catch (IOException e) {
+            throw new RuntimeException("SWW", e);
+        }
+    }
+
+    public void sendServiceMessage(String message) {
         try {
             out.writeUTF(message);
         } catch (IOException e) {
