@@ -17,9 +17,17 @@ public class Main {
         vehicles.add(new Car("Ford Focus", "M800LI"));
         vehicles.add(new Car("Honda Accord", "R600NR"));
         vehicles.add(new Car("Toyota Rav4", "T500IO"));
+        vehicles.add(new Car("Toyota Rav4", "T600IO"));
+        vehicles.add(new Car("Toyota Rav4", "T700IO"));
+        vehicles.add(new Car("Toyota Rav4", "T800IO"));
 
         ExecutorService executorService = Executors.newFixedThreadPool(vehicles.size());
         for (Vehicle vehicle: vehicles) {
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             executorService.submit(vehicle);
         }
         executorService.shutdown();
